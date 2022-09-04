@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Models\Account;
+use App\Models\RecoverPassword;
+use App\Mail\RecoverPassword as RecoverPasswordMail;
 use App\Traits\PasswordEncryper;
+use Illuminate\Support\Facades\Mail;
 
 class AccountServices {
 
@@ -61,6 +64,26 @@ class AccountServices {
         $account->password = $this->passwordEncryper($newPassword);
 
         return $account->save();
+    }
+
+    public function recoverPassword($email) {
+        $account = Account::firstWhere('email', $email);
+
+        if (!$account) {
+            throw new \Exception("Não foi encontrado nenhuma conta com o email informado.");
+        }
+
+        $recoverPassword = new RecoverPassword();
+        $recoverPassword->hash = sha1(mt_rand(1, 90000) . date('Y-m-d H:i:s') . 'SALT');;
+        $recoverPassword->login = $account->login;
+        $recoverPassword->done = false;
+        $recoverPassword->save();
+
+        try {
+            Mail::to($email)->send(new RecoverPasswordMail($account->login, $recoverPassword->hash));
+        } catch (\Exception $e) {
+            throw new \Exception("Falha ao enviar email com o link de recuperação de senha, entre em contato conosco.");
+        }
     }
 
 }

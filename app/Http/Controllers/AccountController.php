@@ -45,4 +45,14 @@ class AccountController extends Controller {
             return response($e->getMessage(), 400);
         }
     }
+
+    public function recoverPassword(Request $request, AccountServices $accountServices) {
+        try {
+            $accountServices->recoverPassword($request->post('email'));
+
+            return response("Um email com o link para definir uma nova senha foi enviada ao seu email, caso não receba confira na sua caixa de spam.");
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+    }
 }

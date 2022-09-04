@@ -16,4 +16,5 @@ use App\Http\Controllers\AccountController;
 Route::controller(AccountController::class)->group(function () {
     Route::post('account/create', 'createAccount');
     Route::post('account/update-password', 'updatePassword');
+    Route::post('account/recover-password', 'recoverPassword');
 });
