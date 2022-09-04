@@ -77,13 +77,37 @@ class AccountServices {
         $recoverPassword->hash = sha1(mt_rand(1, 90000) . date('Y-m-d H:i:s') . 'SALT');;
         $recoverPassword->login = $account->login;
         $recoverPassword->done = false;
-        $recoverPassword->save();
+
+        if (!$recoverPassword->save()) {
+            throw new \Exception("Ocorreu uma falha ao recuperar sua senha, entre em contato conosco para prosseguirmos.");
+        }
 
         try {
             Mail::to($email)->send(new RecoverPasswordMail($account->login, $recoverPassword->hash));
         } catch (\Exception $e) {
             throw new \Exception("Falha ao enviar email com o link de recuperação de senha, entre em contato conosco.");
         }
+    }
+
+    public function resetPassword($token, $password) {
+        $recoveryPassword = RecoverPassword::firstWhere([
+            'hash' => $token,
+            'done' => false
+        ]);
+
+        if (!$recoveryPassword) {
+            throw new \Exception("Token não encontrado, ou está inválido! Faça uma nova requisição de recuperação de senha.");
+        }
+
+        $account = Account::firstWhere('login', $recoveryPassword->login);
+
+        if (!$account) {
+            throw new \Exception("Não foi encontrado uma conta associada ao token, entre em contato conosco");
+        }
+
+        $account->password = $this->passwordEncryper($password);
+
+        return $account->save();
     }
 
 }
