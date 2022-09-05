@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\AccountServices;
+use App\Services\RankingsServices;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,18 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->scoped(AccountServices::class, function () {
             return new AccountServices();
+        });
+
+        $this->app->scoped(RankingsServices::class, function () {
+            return new RankingsServices();
+        });
+
+        $this->app->scoped(HeroesServices::class, function () {
+            return new HeroesServices();
+        });
+
+        $this->app->scoped(CastlesServices::class, function () {
+            return new CastlesServices();
         });
     }
 }
