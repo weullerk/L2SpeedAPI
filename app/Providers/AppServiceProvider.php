@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Services\AccountServices;
+use App\Services\CastlesServices;
+use App\Services\HeroesServices;
 use App\Services\RankingsServices;
 use Illuminate\Support\ServiceProvider;
 
