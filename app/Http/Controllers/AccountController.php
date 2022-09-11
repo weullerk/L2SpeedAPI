@@ -12,20 +12,21 @@ class AccountController extends Controller {
             $data = $request->all();
 
             if (trim($data['password']) != trim($data['repeat-password'])) {
-                return response("A confirmação da senha falhou, as senhas não são iguais.");
+                return response()->json(['status' => 'warning', 'message' => 'A confirmação da senha falhou, as senhas não são iguais.'], 500);
+
             }
 
             $accountCreated = $accountServices->create($data['login'], $data['email'], trim($data['password']));
 
             if ($accountCreated) {
-                return response("Conta criada com sucesso!", 201);
+                return response()->json(['status' => 'success', 'message' => 'Conta criada com sucesso!'], 201);
 
             } else {
-                return response('Ocorreu uma falha ao criar sua conta, entre em contato conosco para prosseguirmos!', 500);
+                return response()->json(['status' => 'alert', 'message' => 'Ocorreu uma falha ao criar sua conta, entre em contato conosco para prosseguirmos!'], 500);
             }
 
         } catch (\Exception $e) {
-            return response($e->getMessage(), 400);
+            return response()->json(['status' => 'warning', 'message' => $e->getMessage()], 400);
         }
     }
 
