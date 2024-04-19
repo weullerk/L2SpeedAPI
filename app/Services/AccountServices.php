@@ -29,9 +29,9 @@ class AccountServices {
         $account->login = $login;
         $account->email = $email;
         $account->password = $this->passwordEncryper($password);
-        $account->last_active = 0;
+        $account->lastactive = 0;
         $account->access_level = 0;
-        $account->last_server = 0;
+        $account->lastServer = 0;
 
         return $account->save();
     }

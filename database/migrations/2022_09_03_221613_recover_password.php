@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::table('accounts', function (Blueprint $table) {
+            $table->string('email');
+        });
+
         Schema::create('recover_password', function (Blueprint $table) {
             $table->id();
             $table->string('login');
