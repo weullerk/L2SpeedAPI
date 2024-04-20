@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CastlesController;
 use App\Http\Controllers\RankingsController;
+use App\Http\Controllers\ServerController;
 use App\Services\RankingsServices;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
@@ -29,4 +31,13 @@ Route::controller(RankingsController::class)->group(function () {
     Route::get('rankings/olympiads', 'olympiads');
     Route::get('rankings/heroes', 'heroes');
     Route::get('rankings/castles', 'castles');
+});
+
+Route::controller(CastlesController::class)->group(function () {
+    Route::get('castles', 'castles');
+});
+
+
+Route::controller(ServerController::class)->group(function () {
+    Route::get('server/users-online', 'usersOnline');
 });

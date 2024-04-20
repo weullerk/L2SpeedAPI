@@ -22,6 +22,6 @@ class RankingsServices {
     }
 
     public function olympiads() {
-        return OlympiadNobles::select('olympiad_points', 'class_list.class_name', 'characters.char_name')->leftJoin('characters', 'obj_Id', '=', 'char_id')->leftJoin('class_list', 'class_id', '=', 'id')->orderByDesc('olympiad_points')->take(10)->get();
+        return OlympiadNobles::select('olympiad_points', 'class_list.class_name', 'characters.char_name')->leftJoin('characters', 'obj_Id', '=', 'charId')->leftJoin('class_list', 'class_id', '=', 'id')->orderByDesc('olympiad_points')->take(10)->get();
     }
 }
