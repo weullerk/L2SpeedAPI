@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CastlesController;
 use App\Http\Controllers\RankingsController;
 use App\Http\Controllers\ServerController;
@@ -41,3 +42,10 @@ Route::controller(CastlesController::class)->group(function () {
 Route::controller(ServerController::class)->group(function () {
     Route::get('server/users-online', 'usersOnline');
 });
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('login', 'login');
+    Route::post('logout', 'logout');
+    Route::post('refresh', 'refresh');
+});
+
