@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\PasswordEncryper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use mysql_xdevapi\Exception;
 
 class AuthController extends Controller
 {
@@ -32,7 +33,7 @@ class AuthController extends Controller
             'password' => $this->passwordEncryper(request()->get('password'))
         ];
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (! $token = auth()->attempt($credentials, true)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -58,7 +59,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Deslogado com sucesso!']);
     }
 
     /**
@@ -85,5 +86,13 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    public function checkAccess() {
+        try {
+            return response()->json(['valid' => auth()->check()]);
+        } catch (\Exception $e) {
+            return response()->json(['valid' => false]);
+        }
     }
 }
