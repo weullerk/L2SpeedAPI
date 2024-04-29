@@ -77,7 +77,7 @@ class VoteSystemController extends Controller
     }
 
     public function top100arenaPostback() {
-        if (request()->ip() == '3.86.48.1163.86.48.116') {
+        if (request()->ip() == '3.86.48.116') {
             $account = request()->get('postback');
             $date = Carbon::now('America/Sao_Paulo');
 
