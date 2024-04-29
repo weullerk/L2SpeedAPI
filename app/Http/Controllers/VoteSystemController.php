@@ -76,7 +76,7 @@ class VoteSystemController extends Controller
         }
     }
 
-    public function top100arena() {
+    public function top100arenaPostback() {
         if (request()->ip() == '3.86.48.1163.86.48.116') {
             $account = request()->get('postback');
             $date = Carbon::now('America/Sao_Paulo');
@@ -93,7 +93,7 @@ class VoteSystemController extends Controller
         return response('', 403);
     }
 
-    public function top100arenaPostback() {
+    public function top100arena() {
         $date = Carbon::now(new DateTimeZone('America/Sao_Paulo'));
 
         $ip = '201.77.170.64';
