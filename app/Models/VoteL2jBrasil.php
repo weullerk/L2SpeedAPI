@@ -4,11 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model {
+class VoteL2jBrasil extends Model {
 
-    protected $table = 'accounts';
-    protected $primaryKey = 'login';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    protected $table = 'votel2jbrasil';
+
     public $timestamps = false;
 }

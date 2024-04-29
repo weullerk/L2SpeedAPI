@@ -8,10 +8,11 @@
         "php": "^8.0.2",
         "barryvdh/laravel-cors": "^3.0",
         "fruitcake/laravel-cors": "^3.0",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.8",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "orchestra/parser": "^7.0",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {

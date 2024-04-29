@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model {
+class Characters extends Model {
 
-    protected $table = 'accounts';
-    protected $primaryKey = 'login';
+    protected $table = 'characters';
+    protected $primaryKey = 'obj_Id';
     public $incrementing = false;
-    protected $keyType = 'string';
     public $timestamps = false;
 }

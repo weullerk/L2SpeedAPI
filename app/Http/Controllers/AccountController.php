@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Characters;
 use Illuminate\Http\Request;
 use App\Services\AccountServices;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller {
 
@@ -80,5 +82,10 @@ class AccountController extends Controller {
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
+    }
+
+    public function listCharacters() {
+        $chars = Characters::where('account_name', Auth()->user()->login)->select('char_name')->get()->toArray();
+        return response()->json($chars);
     }
 }

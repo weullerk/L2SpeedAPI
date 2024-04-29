@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VoteL2jBrasil extends Model {
+class VoteTop100Arena extends Model {
 
-    protected $table = 'votel2jbrasil';
+    protected $table = 'votetop100arena';
 
     public $timestamps = false;
 }
