@@ -55,7 +55,7 @@ class VoteSystemController extends Controller
             $vote = VoteL2jBrasil::where([
                 'date' => $data['date'],
                 'ip' => $data['ip'],
-                'account' => 'radiador22'
+                'account' => $characterEntity->account_name
             ])->get();
 
             if ($vote->count() == 0) {
