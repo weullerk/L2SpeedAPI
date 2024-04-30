@@ -94,13 +94,7 @@ class VoteSystemController extends Controller
     }
 
     public function top100arena() {
-        $date = Carbon::now(new DateTimeZone('America/Sao_Paulo'));
-
-        $ip = '201.77.170.64';
-        //$ip = request()->getClientIp();
-
-        $char = 'Kreator1';
-        //$char = request('char_name');
+        $char = request('char_name');
 
         $characterEntity = Character::where([
             'char_name' => $char
@@ -111,6 +105,21 @@ class VoteSystemController extends Controller
         }
 
         $charId = $characterEntity->obj_Id;
+        $accountName = $characterEntity->account_name;
+
+        $votos = VoteTop100Arena::where(['account' => $accountName, 'claimed' => false])->get();
+
+        if ($votos->count() > 0) {
+            foreach ($votos as $voto) {
+                $this->deliverReward($charId);
+
+                $voto->claimed = true;
+                $voto->save();
+            }
+            return response()->json(['status' => true, 'message' => 'Recompensa entregue na warehouse do seu char, selecione-o novamente para aparecer na warehouse.']);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Não foi detectado o voto.']);
+        }
     }
 
 
