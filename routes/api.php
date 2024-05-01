@@ -54,5 +54,6 @@ Route::controller(VoteSystemController::class)->group(function () {
     Route::post('vote/l2jbrasil', 'l2jbrasil');
     Route::post('vote/top100arena', 'top100arena');
     Route::get('vote/top100arena/postback', 'top100arenaPostback');
+    Route::post('vote/l2votes', 'l2votes');
 });
 

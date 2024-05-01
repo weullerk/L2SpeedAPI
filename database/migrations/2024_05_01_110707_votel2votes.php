@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('votetop100arena', function (Blueprint $table) {
+        Schema::create('votel2votes', function (Blueprint $table) {
             $table->id();
-            $table->string('ip', 48)->nullable();
-            $table->unsignedBigInteger('date');
+            $table->string('ip', 48);
+            $table->timestamp('date');
             $table->string('account')->references('login')->on('accounts');
-            $table->boolean('claimed')->default(false);
         });
     }
 

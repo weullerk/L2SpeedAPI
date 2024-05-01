@@ -122,5 +122,28 @@ class VoteSystemController extends Controller
         }
     }
 
+    public function l2votes() {
+//        $ip = request()->getClientIp();
+        $ip = '201.77.170.33';
+        $char = request('char_name');
 
+        $characterEntity = Character::where([
+            'char_name' => $char
+        ])->first();
+
+        if (!$characterEntity) {
+            return response()->json(['status' => false, 'message' => 'Char não encontrado.']);
+        }
+
+        $charId = $characterEntity->obj_Id;
+
+        $client = new Client();
+        $apiUrl = 'https://l2votes.com/api.php?apiKey=1382e7197a_056169dbbf_74177ec396_1a&ip=' . $ip;
+
+        $response = $client->get($apiUrl);
+
+        $votes = json_decode($response->getBody()->getContents(), true);
+
+        dd($votes);
+    }
 }

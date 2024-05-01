@@ -15,7 +15,7 @@ trait RewardDeliver
         ])->first();
 
         if ($item) {
-            $item->count = $item->count + 5000;
+            $item->count = $item->count + 10000;
             $item->save();
         } else {
             $itemMaxId = Items::orderBy('object_id', 'desc')->first();
