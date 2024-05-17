@@ -23,7 +23,7 @@ trait RewardDeliver
                 "owner_id" => $charId,
                 "object_id" => $itemMaxId->object_id + 1000,
                 "item_id" => 6393,
-                "count" => 5000,
+                "count" => 20000,
                 "enchant_level" => 0,
                 "loc" => "WAREHOUSE",
                 "loc_data" => 0,

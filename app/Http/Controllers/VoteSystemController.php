@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Character;
 use App\Models\Items;
 use App\Models\VoteL2jBrasil;
+use App\Models\VoteL2Votes;
 use App\Models\VoteTop100Arena;
 use App\Services\CastlesServices;
 use App\Services\ServerServices;
@@ -62,7 +63,7 @@ class VoteSystemController extends Controller
                 $voteEntity = new VoteL2jBrasil();
                 $voteEntity->date = $data['date'];
                 $voteEntity->ip = $data['ip'];
-                $voteEntity->account = 'radiador22';
+                $voteEntity->account = $characterEntity->account_name;
                 $voteEntity->save();
 
                 $this->deliverReward($charId);
@@ -123,8 +124,8 @@ class VoteSystemController extends Controller
     }
 
     public function l2votes() {
-//        $ip = request()->getClientIp();
-        $ip = '201.77.170.33';
+        $ip = request()->getClientIp();
+        //$ip = '201.77.166.231';
         $char = request('char_name');
 
         $characterEntity = Character::where([
@@ -144,6 +145,34 @@ class VoteSystemController extends Controller
 
         $votes = json_decode($response->getBody()->getContents(), true);
 
-        dd($votes);
+        $newVotes = 0;
+
+        foreach ($votes as $vote) {
+            if ($vote['status'] == '1') {
+                $voteRegistered = VoteL2Votes::where([
+                   'account' => $characterEntity->account_name,
+                    'date' => $vote['date'],
+                    'ip' => $vote['ip']
+                ])->first();
+
+                if (!$voteRegistered) {
+                    $voteEntity = new VoteL2Votes();
+                    $voteEntity->ip = $vote['ip'];
+                    $voteEntity->date = $vote['date'];
+                    $voteEntity->account = $characterEntity->account_name;
+                    $voteEntity->save();
+
+                    $this->deliverReward($charId);
+
+                    $newVotes++;
+                }
+            }
+
+            if ($newVotes) {
+                return response()->json(['status' => true, 'message' => 'Recompensa entregue na warehouse do seu char, após relogar ela estará na sua warehouse.']);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Não foi encotrado nenhum voto, ou talvez você já tenho votado na última 24 hora.']);
+            }
+        }
     }
 }
