@@ -175,4 +175,17 @@ class VoteSystemController extends Controller
             }
         }
     }
+
+    public function gtop100postback() {
+        $voterIP = request('VoterIP');
+        $success = request('success'); // 1 or 0
+        $pingUsername = request('pingUsername');
+        $pingbackKey = request('pingbackkey');
+
+        if ($pingbackKey == 'yrUwYeRGES' && $pingUsername == 'radiador22' && $success == 1) {
+
+
+            return response()->status(200);
+        }
+    }
 }
